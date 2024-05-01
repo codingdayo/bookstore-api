@@ -11,21 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/book")
+//@RequestMapping("/book")
 public class BookController {
 
     @Autowired
     BookService bookService;
 
-    @GetMapping("{id}")
+    @GetMapping("/admin/{id}")
     public ResponseEntity<Book> findById(@PathVariable ("id") Long theId){
         Book theBook = bookService.findById(theId);
-
         return new ResponseEntity<>(theBook, HttpStatus.OK);
 
     }
 
-    @GetMapping
+    @GetMapping("/public/product")
     public ResponseEntity<List<Book>> findAllBooks(){
         List<Book> allBooks = bookService.findAll();
 
@@ -33,10 +32,8 @@ public class BookController {
 
     }
 
-    @PostMapping
+    @PostMapping("/admin/saveproduct")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
-
-
 
         Book savedBook = bookService.createBook(book);
 
@@ -44,7 +41,7 @@ public class BookController {
 
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/admin/{id}")
     public ResponseEntity<Book> editBook(@PathVariable ("id") Long theId, @RequestBody Book book){
 
      book.setId(theId);
@@ -54,7 +51,7 @@ public class BookController {
         return new ResponseEntity<>(updatedBook, HttpStatus.OK );
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable ("id") Long theId){
 
         bookService.delete(theId);
